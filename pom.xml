@@ -1,29 +1,38 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.din.java</groupId>
-	<artifactId>stream</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<description>JAVA Program to use Stream to do certain Operation</description>
-
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<version.log4j2>2.17.2</version.log4j2>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>${version.log4j2}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>${version.log4j2}</version>
-		</dependency>
-	</dependencies>
-
-</project>
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" packages="be.axa">
+    <Appenders>
+        <RollingFile name="logfile" fileName="c:/J/workspace/SelfLearn/stream/Application.log" filePattern="c:/J/workspace/SelfLearn/stream/Application.log.%i.gz"
+            ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %X{X-Axa-MsgId} %X{X-Axa-InitialMsgId} %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="50MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+ 
+        <Async name="Async">
+            <AppenderRef ref="logfile" />
+        </Async>
+         
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.stream" level="DEBUG" additivity="false">
+            <AppenderRef ref="Async" />
+            <AppenderRef ref="STDOUT" />
+        </Logger>
+ 
+        <Logger name="org.example" level="ERROR" additivity="false">
+            <AppenderRef ref="Async" />
+            <!-- <AppenderRef ref="STDOUT" /> -->
+        </Logger>
+ 
+        <Root level="DEBUG" additivity="false">
+            <AppenderRef ref="Async" />
+        </Root>
+    </Loggers>
+</Configuration>
